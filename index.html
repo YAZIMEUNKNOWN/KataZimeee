@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Quotes ZimeMajesty</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Website Quotes ZimeMajesty</h2>
+  <div class="card">
+    <textarea id="quote" rows="4" placeholder="Tulis kata-kata quotes..."></textarea>
+    <input id="author" type="text" placeholder="Nama Anda / Pencipta" />
+
+    <label for="bgStyle">Pilih Latar:</label>
+    <select id="bgStyle"></select>
+
+    <label for="quoteFont">Font untuk Quotes:</label>
+    <select id="quoteFont">
+      <option value="Arial">Arial</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Comic Sans MS">Comic Sans</option>
+    </select>
+    <label><input type="checkbox" id="boldQuote"> Tebalkan Quotes</label>
+
+    <label for="authorFont">Font untuk Penulis:</label>
+    <select id="authorFont">
+      <option value="Arial">Arial</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Comic Sans MS">Comic Sans</option>
+    </select>
+
+    <label for="quoteColor">Warna Teks Quotes:</label>
+    <input type="color" id="quoteColor" value="#f1f5f9">
+
+    <label for="authorColor">Warna Nama Penulis:</label>
+    <input type="color" id="authorColor" value="#e2e8f0">
+
+    <button id="download">Download Gambar</button>
+  </div>
+
+  <canvas id="canvas" width="800" height="600"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
