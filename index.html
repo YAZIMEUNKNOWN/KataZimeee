@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Quotes ZimeMajesty</title>
+  <title>Quotes ke Gambar</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Website Quotes ZimeMajesty</h2>
+  <h2>Quotes Generator ZimeMajesty</h2>
   <div class="card">
     <textarea id="quote" rows="4" placeholder="Tulis kata-kata quotes..."></textarea>
     <input id="author" type="text" placeholder="Nama Anda / Pencipta" />
@@ -15,7 +15,7 @@
     <label for="bgStyle">Pilih Latar:</label>
     <select id="bgStyle"></select>
 
-    <label for="quoteFont">Font untuk Quotes:</label>
+    <label for="quoteFont">Font Quotes:</label>
     <select id="quoteFont">
       <option value="Arial">Arial</option>
       <option value="Georgia">Georgia</option>
@@ -27,7 +27,7 @@
     </select>
     <label><input type="checkbox" id="boldQuote"> Tebalkan Quotes</label>
 
-    <label for="authorFont">Font untuk Penulis:</label>
+    <label for="authorFont">Font Penulis:</label>
     <select id="authorFont">
       <option value="Arial">Arial</option>
       <option value="Georgia">Georgia</option>
@@ -39,10 +39,10 @@
     </select>
 
     <label for="quoteSize">Ukuran Font Quotes:</label>
-    <input id="quoteSize" type="number" value="48" min="20" max="100" />
+    <input id="quoteSize" type="number" value="60" min="20" max="120" />
 
     <label for="authorSize">Ukuran Font Penulis:</label>
-    <input id="authorSize" type="number" value="32" min="16" max="80" />
+    <input id="authorSize" type="number" value="40" min="16" max="100" />
 
     <label for="quoteColor">Warna Teks Quotes:</label>
     <input type="color" id="quoteColor" value="#f1f5f9">
@@ -53,7 +53,7 @@
     <button id="download">Download Gambar</button>
   </div>
 
-  <!-- ukuran tetap 1280x1280 -->
+  <!-- Ukuran tetap 1280x1280 -->
   <canvas id="canvas" width="1280" height="1280"></canvas>
 
   <!-- Twemoji -->
