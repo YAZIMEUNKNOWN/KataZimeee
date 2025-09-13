@@ -129,11 +129,66 @@ function drawCanvas(){
 ].forEach(el => el.addEventListener('input', drawCanvas));
 
 downloadBtn.addEventListener('click', ()=>{
-  const link = document.createElement('a');
+  const link = document.createElement('a');function drawTextWithEmoji(ctx, text, x, y, fontSize, font, color, maxWidth) {
+  let parsed = twemoji.parse(text, { folder: 'svg', ext: '.svg' });
+
+  // Regex untuk split emoji dan text biasa
+  const parts = text.split(/(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/gu);
+
+  let offsetX = x - maxWidth / 2; // mulai dari kiri agar center
+  ctx.font = fontSize + "px " + font;
+  ctx.fillStyle = color;
+
+  parts.forEach(part => {
+    if (!part) return;
+
+    // Kalau bagian ini emoji
+    if (/\p{Emoji}/u.test(part)) {
+      let codePoint = twemoji.convert.toCodePoint(part);
+      let img = new Image();
+      img.src = `https://twemoji.maxcdn.com/v/latest/svg/${codePoint}.svg`;
+      img.onload = () => {
+        ctx.drawImage(img, offsetX, y - fontSize, fontSize, fontSize);
+      };
+      offsetX += fontSize;
+    } else {
+      ctx.fillText(part, offsetX, y);
+      offsetX += ctx.measureText(part).width;
+    }
+  });
+  }
   link.download = 'quotes.png';
   link.href = canvas.toDataURL();
   link.click();
 });
 
 loadBgOptions();
+function drawTextWithEmoji(ctx, text, x, y, fontSize, font, color, maxWidth) {
+  let parsed = twemoji.parse(text, { folder: 'svg', ext: '.svg' });
+
+  // Regex untuk split emoji dan text biasa
+  const parts = text.split(/(\p{Emoji_Presentation}|\p{Emoji}\uFE0F)/gu);
+
+  let offsetX = x - maxWidth / 2; // mulai dari kiri agar center
+  ctx.font = fontSize + "px " + font;
+  ctx.fillStyle = color;
+
+  parts.forEach(part => {
+    if (!part) return;
+
+    // Kalau bagian ini emoji
+    if (/\p{Emoji}/u.test(part)) {
+      let codePoint = twemoji.convert.toCodePoint(part);
+      let img = new Image();
+      img.src = `https://twemoji.maxcdn.com/v/latest/svg/${codePoint}.svg`;
+      img.onload = () => {
+        ctx.drawImage(img, offsetX, y - fontSize, fontSize, fontSize);
+      };
+      offsetX += fontSize;
+    } else {
+      ctx.fillText(part, offsetX, y);
+      offsetX += ctx.measureText(part).width;
+    }
+  });
+}
 drawCanvas();
