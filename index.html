@@ -1,139 +1,61 @@
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const quoteInput = document.getElementById('quote');
-const authorInput = document.getElementById('author');
-const bgStyleSelect = document.getElementById('bgStyle');
-const quoteFontSelect = document.getElementById('quoteFont');
-const authorFontSelect = document.getElementById('authorFont');
-const quoteColorInput = document.getElementById('quoteColor');
-const authorColorInput = document.getElementById('authorColor');
-const boldQuoteCheckbox = document.getElementById('boldQuote');
-const quoteSizeInput = document.getElementById('quoteSize');
-const authorSizeInput = document.getElementById('authorSize');
-const downloadBtn = document.getElementById('download');
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Quotes ZimeMajesty</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Website Quotes ZimeMajesty</h2>
+  <div class="card">
+    <textarea id="quote" rows="4" placeholder="Tulis kata-kata quotes..."></textarea>
+    <input id="author" type="text" placeholder="Nama Anda / Pencipta" />
 
-// 🔥 contoh warna dasar
-const colorOptions = [
-  {name:"Hitam", code:"#000000"},
-  {name:"Putih", code:"#ffffff"},
-  {name:"Merah", code:"#ff0000"},
-  {name:"Biru", code:"#2563eb"},
-  {name:"Hijau", code:"#16a34a"},
-  {name:"Kuning", code:"#ffff00"},
-  {name:"Ungu", code:"#7c3aed"},
-  {name:"Pink", code:"#ec4899"},
-  {name:"Coklat", code:"#8b4513"},
-  {name:"Abu-Abu", code:"#808080"},
-];
+    <label for="bgStyle">Pilih Latar:</label>
+    <select id="bgStyle"></select>
 
-function loadBgOptions(){
-  colorOptions.forEach(c=>{
-    let opt = document.createElement("option");
-    opt.value = "solid:"+c.code;
-    opt.textContent = c.name;
-    bgStyleSelect.appendChild(opt);
-  });
-  let gradients = [
-    {val:"gradient:blue-purple",label:"Gradient Biru → Ungu"},
-    {val:"gradient:orange-pink",label:"Gradient Oranye → Pink"},
-    {val:"gradient:green-teal",label:"Gradient Hijau → Toska"},
-  ];
-  gradients.forEach(g=>{
-    let opt = document.createElement("option");
-    opt.value = g.val; opt.textContent = g.label;
-    bgStyleSelect.appendChild(opt);
-  });
-  let images = [
-    {val:"image:https://source.unsplash.com/1280x1280/?nature,water",label:"Foto Alam"},
-    {val:"image:https://source.unsplash.com/1280x1280/?city,night",label:"Foto Kota Malam"},
-    {val:"image:https://source.unsplash.com/1280x1280/?space,galaxy",label:"Foto Galaxy"},
-  ];
-  images.forEach(img=>{
-    let opt = document.createElement("option");
-    opt.value = img.val; opt.textContent = img.label;
-    bgStyleSelect.appendChild(opt);
-  });
-  bgStyleSelect.selectedIndex = 0;
-}
+    <label for="quoteFont">Font untuk Quotes:</label>
+    <select id="quoteFont">
+      <option value="Arial">Arial</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Comic Sans MS">Comic Sans</option>
+    </select>
+    <label><input type="checkbox" id="boldQuote"> Tebalkan Quotes</label>
 
-function wrapText(context, text, x, y, maxWidth, lineHeight) {
-  const words = text.split(' ');
-  let line = '', lines = [];
-  for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n] + ' ';
-    const metrics = context.measureText(testLine);
-    if (metrics.width > maxWidth && n > 0) {
-      lines.push(line);
-      line = words[n] + ' ';
-    } else {
-      line = testLine;
-    }
-  }
-  lines.push(line);
-  lines.forEach((l,k)=>context.fillText(l, x, y + (k * lineHeight)));
-}
+    <label for="authorFont">Font untuk Penulis:</label>
+    <select id="authorFont">
+      <option value="Arial">Arial</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Comic Sans MS">Comic Sans</option>
+    </select>
 
-function drawCanvas(){
-  const quote = quoteInput.value.trim() || "Tulis quotes di sini...";
-  const author = authorInput.value.trim() || "Anonim";
-  const bgStyle = bgStyleSelect.value;
-  const quoteFont = quoteFontSelect.value;
-  const authorFont = authorFontSelect.value;
-  const quoteColor = quoteColorInput.value;
-  const authorColor = authorColorInput.value;
-  const isBold = boldQuoteCheckbox.checked;
-  const quoteSize = parseInt(quoteSizeInput.value) || 48;
-  const authorSize = parseInt(authorSizeInput.value) || 32;
+    <label for="quoteSize">Ukuran Font Quotes:</label>
+    <input id="quoteSize" type="number" value="48" min="20" max="100" />
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    <label for="authorSize">Ukuran Font Penulis:</label>
+    <input id="authorSize" type="number" value="32" min="16" max="80" />
 
-  if(bgStyle.startsWith("solid:")){
-    ctx.fillStyle = bgStyle.split(":")[1];
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    renderText();
-  } else if(bgStyle.startsWith("gradient:")){
-    let type = bgStyle.split(":")[1];
-    let grad = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-    if(type==="blue-purple"){grad.addColorStop(0,"#2563eb");grad.addColorStop(1,"#7c3aed");}
-    if(type==="orange-pink"){grad.addColorStop(0,"#f97316");grad.addColorStop(1,"#ec4899");}
-    if(type==="green-teal"){grad.addColorStop(0,"#16a34a");grad.addColorStop(1,"#14b8a6");}
-    ctx.fillStyle = grad;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    renderText();
-  } else if(bgStyle.startsWith("image:")){
-    const imgUrl = bgStyle.split(":")[1];
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = imgUrl;
-    img.onload = ()=>{ctx.drawImage(img,0,0,canvas.width,canvas.height);renderText();};
-    return;
-  }
+    <label for="quoteColor">Warna Teks Quotes:</label>
+    <input type="color" id="quoteColor" value="#f1f5f9">
 
-  function renderText(){
-    ctx.fillStyle = quoteColor;
-    ctx.font = (isBold ? "bold " : "") + quoteSize + "px " + quoteFont;
-    ctx.textAlign = "center";
-    wrapText(ctx, '“' + quote + '”', canvas.width/2, 400, 1000, quoteSize + 12);
+    <label for="authorColor">Warna Nama Penulis:</label>
+    <input type="color" id="authorColor" value="#e2e8f0">
 
-    ctx.font = authorSize + "px " + authorFont;
-    ctx.fillStyle = authorColor;
-    ctx.fillText("— " + author, canvas.width/2, 1100);
-  }
-}
+    <button id="download">Download Gambar</button>
+  </div>
 
-[
-  quoteInput, authorInput, bgStyleSelect,
-  quoteFontSelect, authorFontSelect,
-  quoteColorInput, authorColorInput,
-  boldQuoteCheckbox, quoteSizeInput, authorSizeInput
-].forEach(el => el.addEventListener('input', drawCanvas));
+  <!-- ukuran tetap 1280x1280 -->
+  <canvas id="canvas" width="1280" height="1280"></canvas>
 
-downloadBtn.addEventListener('click', ()=>{
-  const link = document.createElement('a');
-  link.download = 'quotes.png';
-  link.href = canvas.toDataURL();
-  link.click();
-});
-
-loadBgOptions();
-drawCanvas();
+  <script src="script.js"></script>
+</body>
+</html>
