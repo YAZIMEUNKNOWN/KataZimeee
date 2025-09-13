@@ -38,6 +38,12 @@
       <option value="Comic Sans MS">Comic Sans</option>
     </select>
 
+    <label for="quoteSize">Ukuran Font Quotes:</label>
+    <input id="quoteSize" type="number" value="48" min="20" max="100" />
+
+    <label for="authorSize">Ukuran Font Penulis:</label>
+    <input id="authorSize" type="number" value="32" min="16" max="80" />
+
     <label for="quoteColor">Warna Teks Quotes:</label>
     <input type="color" id="quoteColor" value="#f1f5f9">
 
@@ -47,7 +53,8 @@
     <button id="download">Download Gambar</button>
   </div>
 
-<canvas id="canvas" width="1280" height="1280"></canvas>
+  <!-- ukuran tetap 1280x1280 -->
+  <canvas id="canvas" width="1280" height="1280"></canvas>
 
   <script src="script.js"></script>
 </body>
