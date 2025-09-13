@@ -136,18 +136,4 @@ downloadBtn.addEventListener('click', ()=>{
 });
 
 loadBgOptions();
-drawCanvas();  }
-}
-
-// === Live Preview ===
-[quoteInput, authorInput, bgStyleSelect, quoteFontSelect, authorFontSelect, boldQuoteCheckbox, quoteSizeInput, authorSizeInput, quoteColorInput, authorColorInput]
-.forEach(el=> el.addEventListener("input", drawCanvas));
-
-downloadBtn.addEventListener("click", ()=>{
-  const link = document.createElement('a');
-  link.download = 'quotes.png';
-  link.href = canvas.toDataURL();
-  link.click();
-});
-
-drawCanvas(); // init
+drawCanvas();
